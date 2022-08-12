@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Changa+One&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,300&display=swap');
+
+.login {
+    height: 100vh;
+    width: 100vw;
+    background: linear-gradient(122.19deg, grey 1.89%, pink 113.56%);
+    position: relative;
+}
+
+.login > h1 {
+    font-family: 'Changa One';
+    font-weight: normal;
+    font-size: 144px;
+    left: 40px;
+    top: 150px;
+    position: absolute;
+    color: #ffffff;
+}
+
+.login > h2 {
+    font-weight: normal;
+    font-size: 40px;
+    left: 50px;
+    top: 280px;
+    position: absolute;
+    color: #ffffff;
+}
+
+.login-register-container {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px 50px;
+    left: 150px;
+    top: 360px;
+    background: #ffffff;
+}
+
+.login-register-container > input {
+    height: 30px;
+    width: 80%;
+    border: 1px solid grey;
+    outline: none;
+    margin-bottom: 10px;
+    font-size: 25px;
+    padding: 5px;
+}
+
+.login-register-container > button {
+    padding: 5px 20px;
+    border: none;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.login-button {
+    background: linear-gradient(122.19deg, grey 1.89%, pink 113.56%);
+    font-size: 20px;
+    margin-top: 5px;
+    font-family: 'Changa One';
+    font-weight: normal;
+    color: #ffffff;
+}
+
+.create-account-button {
+    background: none;
+    margin-top: 10px;
+}

@@ -4,6 +4,8 @@ import { auth, db } from "../firebase.js";
 import { useNavigate } from "react-router-dom";
 import { uid } from "uid";
 import { set, ref, onValue, remove } from "firebase/database";
+import './homepage.css';
+import AddIcon from '@mui/icons-material/Add';
 
 export default function Homepage() {
     const [todo, setTodo] = useState("");
@@ -18,7 +20,7 @@ export default function Homepage() {
                     const data = snapshot.val();
                     if (data !== null) {
                         Object.values(data).map(todo => {
-                            setTodos((oldArray) => [...oldArray, todo]);
+                            setTodos((oldArray) => [...oldArray, todo])
                         });
                     }
                 });
@@ -26,7 +28,7 @@ export default function Homepage() {
                 navigate("/");
             }
         });
-    }, [])
+    }, []);
 
     const handleSignOut = () => {
         signOut(auth)
@@ -53,22 +55,32 @@ export default function Homepage() {
     };
 
     return (
-        <div>
+        <div className="homepage">
             <input
+                className="add-task-input"
                 type="text"
                 placeholder="Add New Task"
                 value={todo}
                 onChange={(e) => setTodo(e.target.value)}
             />
+
+            <select className="select" >
+                <option></option>
+                <option value="High"> High </option>
+                <option value="Medium"> Medium </option>
+                <option value="Low"> Low </option>
+            </select>
+
             {todos.map((todo) => (
-                <div>
-                <h1>{todo.todo}</h1>
-                <button onClick={() => handleDelete(todo.uidd)}>Complete</button>
+                <div className="todo">
+                    <h1>{todo.todo}</h1>
+                    <button className="delete-button" onClick={() => handleDelete(todo.uidd)}>Complete</button>
                 </div>
             ))}
-
-            <button onClick={writeToDatabase}>add</button>
-            <button onClick={handleSignOut}>Logout</button>
+            <div>
+                <AddIcon onClick={writeToDatabase} className="add-icon" />
+            </div>
+            <button className="logout-button" onClick={handleSignOut}>LogOut</button>
         </div>
     );
 }

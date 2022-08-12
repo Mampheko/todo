@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { GoogleButton } from 'react-google-button';
+import { UserAuth } from "../context/AuthContext.js";
 import { signInWithEmailAndPassword, onAuthStateChanged, createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase.js";
 import { useNavigate } from "react-router-dom";
+import './login.css';
+
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -9,9 +13,9 @@ export default function Login() {
     const [isRegistering, setIsRegistering] = useState(false);
     const navigate = useNavigate();
     const [registerInformation, setRegisterInformation] = useState({
-        name:"",
-        email:"",
-        password:""
+        name: "",
+        email: "",
+        password: ""
     });
 
     useEffect(() => {
@@ -22,7 +26,16 @@ export default function Login() {
         });
     }, []);
 
-   
+    const  { googleSignIn } = UserAuth();
+
+    const handleGoogleSignIn = async () => {
+        try {
+            await googleSignIn();
+        }catch (error) {
+            console.log(error);
+        }
+    };
+
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
     };
@@ -44,13 +57,13 @@ export default function Login() {
         }
         createUserWithEmailAndPassword(
             auth,
-             registerInformation.email,
-              registerInformation.password
-              )
-        .then(() => {
-            navigate('/homepage')
-        })
-        .catch((err) => alert(err.message)); 
+            registerInformation.email,
+            registerInformation.password
+        )
+            .then(() => {
+                navigate('/homepage')
+            })
+            .catch((err) => alert(err.message));
     };
 
 
@@ -62,56 +75,60 @@ export default function Login() {
                 {isRegistering ? (
                     <>
                         <input
-                         type="name"
-                          placeholder="Name"
-                           value={registerInformation.name}
+                            type="name"
+                            placeholder="Name"
+                            value={registerInformation.name}
                             onChange={(e) =>
-                                 setRegisterInformation({
+                                setRegisterInformation({
                                     ...registerInformation,
-                                     name:e.target.value
-                        })
-                        }
-                         /><br></br>
-                        <input type="email"
-                         placeholder="Email"
-                           value={registerInformation.email}
-                            onChange={(e) =>
-                                 setRegisterInformation({
-                                    ...registerInformation,
-                                     email:e.target.value
-                        })}
+                                    name: e.target.value
+                                })
+                            }
                         /><br></br>
-                         <input type="password"
-                          placeholder="Password"
+                        <input type="email"
+                            placeholder="Email"
+                            value={registerInformation.email}
+                            onChange={(e) =>
+                                setRegisterInformation({
+                                    ...registerInformation,
+                                    email: e.target.value
+                                })}
+                        /><br></br>
+                        <input type="password"
+                            placeholder="Password"
                             value={registerInformation.password}
                             onChange={(e) =>
-                                 setRegisterInformation({
+                                setRegisterInformation({
                                     ...registerInformation,
-                                     password:e.target.value
-                        })}
+                                    password: e.target.value
+                                })}
                         /><br></br>
-                        <button onClick={handleRegister}>Register</button>
-                        <button onClick={() => setIsRegistering(false)}>Go back</button>
+                        <button className="login-button" onClick={handleRegister}>Register</button>
+                        <button className="create-account-button" onClick={() => setIsRegistering(false)}>Go back</button>
+                        <GoogleButton onclick={handleGoogleSignIn} />
                     </>
                 ) : (
                     <>
                         <input
                             type="email"
+                            placeholder="Email"
                             onChange={handleEmailChange}
                             value={email}
                         /><br></br>
                         <input
                             type="password"
+                            placeholder="Password"
                             onChange={handlePasswordChange}
                             value={password}
                         /><br></br>
-                        <button onClick={handleLogIn}>Login</button>
-                        <button onClick={() => setIsRegistering(true)}>Create an account</button>
-                        
+                        <button className="login-button" onClick={handleLogIn}>Login</button>
+                        <button className="create-account-button" onClick={() => setIsRegistering(true)}>Create an account</button>
+                        <GoogleButton onclick={handleGoogleSignIn} />
                     </>
                 )}
-
             </div>
         </div>
     );
-}
+};
+ 
+
