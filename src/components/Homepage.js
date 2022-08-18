@@ -9,8 +9,10 @@ import AddIcon from '@mui/icons-material/Add';
 
 export default function Homepage() {
     const [todo, setTodo] = useState("");
-    const [todos, setTodos] = useState([])
     const navigate = useNavigate();
+    const [todos, setTodos] = useState([])
+    const [priorityType, setpriorityType] = useState("");
+
 
     useEffect(() => {
         auth.onAuthStateChanged((user) => {
@@ -44,18 +46,21 @@ export default function Homepage() {
         const uidd = uid();
         set(ref(db, `/${auth.currentUser.uid}/${uidd}`), {
             todo: todo,
+            priorityType: priorityType,
             uidd: uidd,
         });
 
         setTodo("")
+        setpriorityType("");
     };
+
 
     const handleDelete = (uid) => {
         remove(ref(db, `/${auth.currentUser.uid}/${uid}`));
     };
 
     return (
-        <div className="homepage">
+        <div className="homepage" >
             <input
                 className="add-task-input"
                 type="text"
@@ -63,24 +68,51 @@ export default function Homepage() {
                 value={todo}
                 onChange={(e) => setTodo(e.target.value)}
             />
-
-            <select className="select" >
+            <select className="select" onChange={(e) => setpriorityType(e.target.value)}>
                 <option></option>
                 <option value="High"> High </option>
                 <option value="Medium"> Medium </option>
                 <option value="Low"> Low </option>
             </select>
-
-            {todos.map((todo) => (
-                <div className="todo">
-                    <h1>{todo.todo}</h1>
-                    <button className="delete-button" onClick={() => handleDelete(todo.uidd)}>Complete</button>
-                </div>
-            ))}
             <div>
-                <AddIcon onClick={writeToDatabase} className="add-icon" />
+                {todos.map((todo) => (
+                    <div>
+                        {todo.priorityType == "High" ? (
+                            <div className="cont">
+                                <div className="todo">
+                                    <h1>{todo.todo}</h1>
+                                    <button className="delete-button" onClick={() => handleDelete(todo.uidd)}>Complete</button><br></br>
+                                </div>
+                                <div className="High-line"></div>
+                            </div>
+
+                        ) : (
+
+                            <div className="cont">
+                                <div className="todo">
+                                    <h1>{todo.todo}</h1>
+                                    <button className="delete-button" onClick={() => handleDelete(todo.uidd)}>Complete</button><br></br>
+                                </div>
+                                <div className="Medium-line"></div>
+                            </div>
+
+                        )  }
+                                <div className="cont">
+                                    <div className="todo">
+                                        <h1>{todo.todo}</h1>
+                                        <button className="delete-button" onClick={() => handleDelete(todo.uidd)}>Complete</button><br></br>
+                                    </div>
+                                    <div className="Low-line"></div>
+                                </div>
+                           
+
+                    </div>
+                ))}
+                <div>
+                    <AddIcon onClick={writeToDatabase} className="add-icon" />
+                </div>
+                <button className="logout-button" onClick={handleSignOut}>LogOut</button>
             </div>
-            <button className="logout-button" onClick={handleSignOut}>LogOut</button>
         </div>
     );
 }

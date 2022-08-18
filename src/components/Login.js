@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { GoogleButton } from 'react-google-button';
-import { UserAuth } from "../context/AuthContext.js";
+/*import { UserAuth } from "../context/AuthContext.js";*/
 import { signInWithEmailAndPassword, onAuthStateChanged, createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase.js";
 import { useNavigate } from "react-router-dom";
 import './login.css';
-
+import { GoogleAuthProvider, signInWithPopup, signOut, getAuth/*onAuthStateChanged*/ } from "firebase/auth";
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -26,15 +26,19 @@ export default function Login() {
         });
     }, []);
 
-    const  { googleSignIn } = UserAuth();
 
-    const handleGoogleSignIn = async () => {
-        try {
-            await googleSignIn();
-        }catch (error) {
-            console.log(error);
-        }
-    };
+
+
+    const googleSignIn = () => {
+        const provider = new GoogleAuthProvider();
+
+        const auth = getAuth();
+
+        signInWithPopup(auth, provider).then(() => {
+            navigate('/homepage');
+
+        })
+    }
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -49,10 +53,11 @@ export default function Login() {
             navigate('/homepage')
         }).catch((err) =>
             alert(err.message));
+
     };
 
     const handleRegister = () => {
-        if (registerInformation.name !== registerInformation.email) {
+        if (registerInformation.name === registerInformation.email) {
             return
         }
         createUserWithEmailAndPassword(
@@ -64,6 +69,7 @@ export default function Login() {
                 navigate('/homepage')
             })
             .catch((err) => alert(err.message));
+
     };
 
 
@@ -105,7 +111,7 @@ export default function Login() {
                         /><br></br>
                         <button className="login-button" onClick={handleRegister}>Register</button>
                         <button className="create-account-button" onClick={() => setIsRegistering(false)}>Go back</button>
-                        <GoogleButton onclick={handleGoogleSignIn} />
+                        <GoogleButton onClick={googleSignIn} />
                     </>
                 ) : (
                     <>
@@ -123,12 +129,12 @@ export default function Login() {
                         /><br></br>
                         <button className="login-button" onClick={handleLogIn}>Login</button>
                         <button className="create-account-button" onClick={() => setIsRegistering(true)}>Create an account</button>
-                        <GoogleButton onclick={handleGoogleSignIn} />
+                        <GoogleButton onClick={googleSignIn} />
                     </>
                 )}
             </div>
         </div>
     );
 };
- 
+
 

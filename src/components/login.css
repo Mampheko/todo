@@ -5,13 +5,14 @@
     width: 100vw;
     background: linear-gradient(122.19deg, grey 1.89%, pink 113.56%);
     position: relative;
+    justify-content: center;
 }
 
 .login > h1 {
     font-family: 'Changa One';
     font-weight: normal;
     font-size: 144px;
-    left: 40px;
+    left: 400px;
     top: 150px;
     position: absolute;
     color: #ffffff;
@@ -20,7 +21,7 @@
 .login > h2 {
     font-weight: normal;
     font-size: 40px;
-    left: 50px;
+    left: 650px;
     top: 280px;
     position: absolute;
     color: #ffffff;
@@ -33,7 +34,7 @@
     justify-content: center;
     flex-direction: column;
     padding: 20px 50px;
-    left: 150px;
+    left: 700px;
     top: 360px;
     background: #ffffff;
 }
