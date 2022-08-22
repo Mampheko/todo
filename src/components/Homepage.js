@@ -13,7 +13,6 @@ export default function Homepage() {
     const [todos, setTodos] = useState([])
     const [priorityType, setpriorityType] = useState("");
 
-
     useEffect(() => {
         auth.onAuthStateChanged((user) => {
             if (user) {
@@ -49,11 +48,9 @@ export default function Homepage() {
             priorityType: priorityType,
             uidd: uidd,
         });
-
         setTodo("")
         setpriorityType("");
     };
-
 
     const handleDelete = (uid) => {
         remove(ref(db, `/${auth.currentUser.uid}/${uid}`));
@@ -86,26 +83,23 @@ export default function Homepage() {
                                 <div className="High-line"></div>
                             </div>
 
-                        ) : (
-
+                        ) :todo.priorityType == "Medium" ? (
                             <div className="cont">
-                                <div className="todo">
-                                    <h1>{todo.todo}</h1>
-                                    <button className="delete-button" onClick={() => handleDelete(todo.uidd)}>Complete</button><br></br>
-                                </div>
-                                <div className="Medium-line"></div>
+                            <div className="todo">
+                                <h1>{todo.todo}</h1>
+                                <button className="delete-button" onClick={() => handleDelete(todo.uidd)}>Complete</button><br></br>
                             </div>
-
-                        )  }
-                                <div className="cont">
-                                    <div className="todo">
-                                        <h1>{todo.todo}</h1>
-                                        <button className="delete-button" onClick={() => handleDelete(todo.uidd)}>Complete</button><br></br>
-                                    </div>
-                                    <div className="Low-line"></div>
-                                </div>
-                           
-
+                            <div className="Medium-line"></div>
+                        </div>
+                        ) : (
+                            <div className="cont">
+                            <div className="todo">
+                                <h1>{todo.todo}</h1>
+                                <button className="delete-button" onClick={() => handleDelete(todo.uidd)}>Complete</button><br></br>
+                            </div>
+                            <div className="Low-line"></div>
+                        </div>
+                        )}
                     </div>
                 ))}
                 <div>

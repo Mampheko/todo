@@ -46,23 +46,20 @@
 .High-line {
     border-bottom: 4px solid red;
     width: 100%;
-    margin-top: -1.4vh;  
+    margin-top: -1.2vh;  
 }
 
 .Medium-line {
     border-bottom: 4px solid orange;
     width: 100%;
-    margin-top: -1.5vh;
-   
+    margin-top: -1.2vh; 
 } 
 
 .Low-line {
     border-bottom: 4px solid green;
     width: 100%;
-    margin-top: -1.4vh;
+    margin-top: -1.2vh;
 } 
-
-
 
 .delete-button {
     width: 150px;
@@ -89,9 +86,9 @@
     border: none;
     transform: scale(2);
     top: 30px;
-    right: 620px;
-    
+    right: 620px;  
 }
-.cont{
+
+ .cont{
     margin-top: 1.5vh;
 }

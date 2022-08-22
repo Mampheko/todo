@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { GoogleButton } from 'react-google-button';
-/*import { UserAuth } from "../context/AuthContext.js";*/
 import { signInWithEmailAndPassword, onAuthStateChanged, createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase.js";
 import { useNavigate } from "react-router-dom";
 import './login.css';
-import { GoogleAuthProvider, signInWithPopup, signOut, getAuth/*onAuthStateChanged*/ } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, getAuth } from "firebase/auth";
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -26,9 +25,6 @@ export default function Login() {
         });
     }, []);
 
-
-
-
     const googleSignIn = () => {
         const provider = new GoogleAuthProvider();
 
@@ -38,7 +34,7 @@ export default function Login() {
             navigate('/homepage');
 
         })
-    }
+    };
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -69,9 +65,7 @@ export default function Login() {
                 navigate('/homepage')
             })
             .catch((err) => alert(err.message));
-
     };
-
 
     return (
         <div className="login">
